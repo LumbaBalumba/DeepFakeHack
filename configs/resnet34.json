@@ -1,5 +1,5 @@
 {
-  "model": "resnet50_imagenet1k_v1",
+  "model": "resnet34_imagenet1k_v1",
   "type": "oml",
 
   "comment": "train",
@@ -33,8 +33,8 @@
     "T_max": 300
   },
   "learning_params": {
-    "n_epochs": 100,
-    "save_frequency": 5,
+    "n_epochs": 1,
+    "save_frequency": 1,
     "device": "cuda"
   },
   "logger_params": {

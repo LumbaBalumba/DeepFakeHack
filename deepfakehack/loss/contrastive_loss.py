@@ -1,6 +1,5 @@
 import torch
-import torch.nn as nn
-
+from torch import nn
 from oml.utils.misc_torch import elementwise_dist
 
 

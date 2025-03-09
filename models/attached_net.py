@@ -1,9 +1,9 @@
-from models.arch.attached_oml_arch import Attached_Net_Arch
+from models.arch.attached_oml_arch import AttachedNetArch
 
 from models.abstract_model import ABCModel
 
 
-class Attached_Net(ABCModel):
+class AttachedNet(ABCModel):
     def __init__(
         self,
         model_name="resnet",
@@ -12,10 +12,9 @@ class Attached_Net(ABCModel):
         pretrained=None,
         extra_layers=None,
     ):
-        super(ABCModel, self).__init__()
-        super(Attached_Net, self).__init__()
+        super().__init__()
 
-        self.model = Attached_Net_Arch(
+        self.model = AttachedNetArch(
             model_name, weights, freeze_source, pretrained, extra_layers
         )
         self.transform = self.model.transform

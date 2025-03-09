@@ -1,22 +1,20 @@
 from pathlib import Path
 import json
 from argparse import ArgumentParser
-
-import models
-
-from deepfakehack.loss.loss import DeepFakelossWithMiner
-
+from datetime import datetime
 import random
-import torch
+
 import numpy as np
+import torch
 import torch.optim.lr_scheduler as sched_lib
 import torch.optim as optim_lib
 
-import oml.miners as miners
-import oml.losses as losses
+from oml import miners
+from oml import losses
 
-from datetime import datetime
-from deepfakehack.datasets import OML_Dataset
+import models
+from deepfakehack.datasets import OMLDataset
+from deepfakehack.loss.loss import DeepFakelossWithMiner
 
 
 def fix_seed(seed: int):
@@ -35,13 +33,9 @@ def parse_args():
     return args
 
 
-def save_model_dict(model, path: str):
-    torch.save(model.state_dict(), path)
-
-
 def main():
     args = parse_args()
-    with open(f"configs/{args.cfg_path}") as f:
+    with open(f"configs/{args.cfg_path}", encoding="utf8") as f:
         cfg_data = json.load(f)
 
     fix_seed(cfg_data["seed"])
@@ -58,7 +52,7 @@ def main():
             optimizer, **cfg_data["scheduler_params"]
         )
 
-        data = OML_Dataset(
+        data = OMLDataset(
             model.transform, cfg_data["sampler_name"], cfg_data["loader_params"]
         )
         if cfg_data["loss_name"] == "DeepFakeLoss":
@@ -79,12 +73,11 @@ def main():
             + cfg_data["model"]
             + "___"
             + str(datetime.now())
-            .split(".")[0]
+            .split(".", maxsplit=1)[0]
             .replace(" ", "_")
             .replace("-", "")
             .replace(":", "_")
         )
-        print(path2weights)
 
         model.training_oml(
             **cfg_data["learning_params"],

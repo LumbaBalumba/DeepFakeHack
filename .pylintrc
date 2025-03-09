@@ -1,0 +1,5 @@
+[MASTER]
+ignore=.venv,configs,.git,.github,data
+
+[MESSAGES CONTROL]
+disable=C0114,C0115,C0116

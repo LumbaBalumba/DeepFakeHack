@@ -1,5 +1,4 @@
 from itertools import product
-
 from typing import List
 
 import numpy as np

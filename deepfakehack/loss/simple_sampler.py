@@ -1,14 +1,7 @@
-from typing import List
-
-from oml.utils.misc import smart_sample
-
-import numpy as np
-
 from collections import defaultdict
 from typing import Iterator, List, Union
 
 import numpy as np
-
 from oml.interfaces.samplers import IBatchSampler
 from oml.utils.misc import smart_sample
 
@@ -78,7 +71,7 @@ class SimpleSampler(IBatchSampler):
                     cls_ids = self.lbl2idx[cls]
                     selected_inds = smart_sample(cls_ids, self.n_instances)
                     ids_batch.extend(selected_inds)
-                except:
+                except Exception:
                     pass
 
             inds_epoch.append(ids_batch)

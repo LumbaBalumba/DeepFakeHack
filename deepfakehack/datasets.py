@@ -1,11 +1,12 @@
 from oml import datasets as d
+from oml.samplers import BalanceSampler
 import pandas as pd
 
-from oml.samplers import BalanceSampler
-from .loss.simple_sampler import SimpleSampler
+from deepfakehack.loss.simple_sampler import SimpleSampler
 
-class OML_Dataset:
-    def __init__(self, transform, sampler : str, params : dict):
+
+class OMLDataset:
+    def __init__(self, transform, sampler: str, params: dict):
         df_train, df_val = pd.read_csv(
             "./data/datasplit/train_with_meta.csv"
         ), pd.read_csv("./data/datasplit/val_with_meta.csv")
@@ -16,4 +17,3 @@ class OML_Dataset:
             self.sampler = SimpleSampler(self.train.get_labels(), **params)
         else:
             self.sampler = BalanceSampler(self.train.get_labels(), **params)
-

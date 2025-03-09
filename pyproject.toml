@@ -22,7 +22,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.dev.dependencies]
 wget = "^3.2"
-pytest = "^8.3.5"
 pylint = "^3.3.4"
 pandas = "^2.2.3"
 ipykernel = "^6.29.5"
@@ -31,7 +30,7 @@ gdown = "^5.2.0"
 [tool.poetry.scripts]
 download = "scripts.download:main"
 train = "scripts.train:main"
-submit = "scripts.make_submission:main"
+submit = "scripts.submit:main"
 
 [[tool.poetry.source]]
 name = "pytorch"

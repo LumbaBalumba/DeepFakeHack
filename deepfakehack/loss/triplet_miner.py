@@ -1,8 +1,8 @@
 from itertools import combinations
 from sys import maxsize
+from typing import List, Tuple
 
 import torch
-from typing import List, Tuple
 
 
 class PositiveTripletMiner:
