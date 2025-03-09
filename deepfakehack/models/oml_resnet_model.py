@@ -1,7 +1,7 @@
 from oml.models import ResnetExtractor
 from oml.registry import get_transforms_for_pretrained
 
-from models.abstract_model import ABCModel
+from deepfakehack.models.abstract_model import ABCModel
 
 
 class OMLResnetModel(ABCModel):
