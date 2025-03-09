@@ -1,0 +1,45 @@
+{
+  "model": "resnet50_imagenet1k_v1",
+  "type": "oml",
+
+  "comment": "train",
+  "seed": 42,
+  "dataset_param": {
+    "name": "data_default",
+    "preload": false,
+    "augmentate": false
+  },
+  "required_loader": true,
+  "sampler_name": "SimpleSampler",
+  "loader_params": {
+    "batch_size": 4,
+    "n_instances": 2
+  },
+  "loss_name": "DeepFakeLoss",
+  "loss_params": {
+    "margin": 0.1
+  },
+  "loss_device": "cuda",
+  "algorithm": {
+    "name": "oml_resnet_model",
+    "model_params": {}
+  },
+  "opt_name": "Adam",
+  "opt_params": {
+    "lr": 0.0001
+  },
+  "scheduler_name": "CosineAnnealingLR",
+  "scheduler_params": {
+    "T_max": 300
+  },
+  "learning_params": {
+    "n_epochs": 100,
+    "save_frequency": 5,
+    "device": "cuda"
+  },
+  "logger_params": {
+    "metrics": ["RMSE", "angle", "NSE"]
+  },
+  "path2weights": "model_weights",
+  "path2metrics": "model_metrics"
+}

@@ -1,0 +1,49 @@
+{
+    "model": "resnet152_imagenet1k_v1",
+    "type": "oml",
+
+    "comment": "train",
+    "seed": 1111,
+    "dataset_param": {
+        "path": ["data_default"]
+    },
+    "loader_params": {
+        "batch_size": 16,
+        "n_instances": 4,
+        "shuffle": true
+    },
+    "loss_name": "TripletLossWithMiner",
+    "miner_name": "AllTripletsMiner",
+    "loss_params": {
+        "margin": 0.1,
+        "need_logs" : true
+    },
+    "algorithm": {
+        "name": "oml_model",
+        "model_params": {
+            "loader": "ResnetExtractor"
+        }
+    },
+    "opt_name": "Adam",
+    "opt_params": {
+        "lr": 0.0001
+    },
+    "scheduler_name": "CosineAnnealingLR",
+    "scheduler_params": {
+        "T_max": 10000
+    },
+    "learning_params": {
+        "n_epochs": 10,
+        "save_frequency": 2,
+        "device": "cuda"
+    },
+    "logger_params": {
+        "metrics": [
+            "RMSE",
+            "angle",
+            "NSE"
+        ]
+    },
+    "path2weights": "model_weights",
+    "path2metrics": "model_metrics"
+}

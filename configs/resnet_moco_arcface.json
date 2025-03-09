@@ -1,0 +1,45 @@
+{
+  "model": "resnet50_moco_v2",
+  "type": "oml",
+
+  "comment": "train",
+  "seed": 42,
+  "dataset_param": {
+    "name": "data_default",
+    "preload": false,
+    "augmentate": false
+  },
+  "required_loader": true,
+  "loader_params": {
+    "batch_size": 16,
+    "n_instances": 4,
+    "shuffle": true
+  },
+  "loss_name": "ArcFaceLoss",
+  "loss_params": {
+    "in_features": 2048,
+    "num_classes": 20001
+  },
+  "algorithm": {
+    "name": "oml_resnet_model",
+    "model_params": {}
+  },
+  "opt_name": "Adam",
+  "opt_params": {
+    "lr": 0.0001
+  },
+  "scheduler_name": "CosineAnnealingLR",
+  "scheduler_params": {
+    "T_max": 300
+  },
+  "learning_params": {
+    "n_epochs": 1,
+    "save_frequency": 1,
+    "device": "cuda:0"
+  },
+  "logger_params": {
+    "metrics": ["RMSE", "angle", "NSE"]
+  },
+  "path2weights": "model_weights",
+  "path2metrics": "model_metrics"
+}

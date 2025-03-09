@@ -1,0 +1,70 @@
+{
+    "model": "resnet",
+    "type": "oml",
+
+    "comment": "train",
+    "seed": 42,
+    "dataset_param": {
+        "name": "data_default",
+        "preload": false,
+        "augmentate": false
+    },
+    "required_loader": true,
+    "loader_params": {
+        "batch_size": 16,
+        "n_instances": 4,
+        "shuffle": true
+    },
+    "loss_name": "TripletLossWithMiner",
+    "miner_name": "AllTripletsMiner",
+    "loss_params": {
+        "margin": 0.1,
+        "need_logs" : true
+    },
+    "algorithm": {
+        "name": "attached_net",
+        "model_params": {
+            "weights": "resnet18_imagenet1k_v1",
+            "freeze_source" : 1,
+            "extra_layers": [
+                ["Linear" , {
+                    "in_features" : 2048,
+                    "out_features" : 2000
+                }],
+                ["ReLU" , {}],
+                ["Linear" , {
+                    "in_features" : 2000,   
+                    "out_features" : 1500
+                }],
+                ["ReLU" , {}],
+                ["Linear" , {
+                    "in_features" : 1500,   
+                    "out_features" : 1000
+                }],
+                ["ReLU" , {}]
+            ]
+        }
+    },
+    "opt_name": "Adam",
+    "opt_params": {
+        "lr": 0.0001
+    },
+    "scheduler_name": "CosineAnnealingLR",
+    "scheduler_params": {
+        "T_max": 300
+    },
+    "learning_params": {
+        "n_epochs": 30,
+        "save_frequency": 2,
+        "device": "cuda"
+    },
+    "logger_params": {
+        "metrics": [
+            "RMSE",
+            "angle",
+            "NSE"
+        ]
+    },
+    "path2weights": "model_weights",
+    "path2metrics": "model_metrics"
+}

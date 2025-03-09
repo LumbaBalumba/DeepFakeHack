@@ -1,0 +1,39 @@
+[project]
+name = "deepfakehack"
+version = "0.1.0"
+description = ""
+authors = [{ name = "LumbaBalumba", email = "vlad.lazar.ik528@yandex.ru" }]
+readme = "README.md"
+requires-python = "^3.11"
+dependencies = [
+  "open-metric-learning (>=3.1.6,<4.0.0)",
+  "scikit-learn (>=1.6.1,<2.0.0)",
+  "pandas (>=2.2.3,<3.0.0)",
+  "argparse (>=1.4.0,<2.0.0)",
+  "tqdm (>=4.67.1,<5.0.0)",
+  "numpy (==1.26.4)",
+  "torch (==2.1.1)",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+wget = "^3.2"
+pytest = "^8.3.5"
+pylint = "^3.3.4"
+pandas = "^2.2.3"
+ipykernel = "^6.29.5"
+gdown = "^5.2.0"
+
+[tool.poetry.scripts]
+download = "scripts.download:main"
+train = "scripts.train:main"
+submit = "scripts.make_submission:main"
+
+[[tool.poetry.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu121"
+priority = "explicit"
