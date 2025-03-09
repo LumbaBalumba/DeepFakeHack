@@ -4,9 +4,7 @@ from argparse import ArgumentParser
 
 import models
 
-from deepfakehack.loss.simple_sampler import SimpleSampler
 from deepfakehack.loss.loss import DeepFakelossWithMiner
-from oml.samplers import BalanceSampler
 
 import random
 import torch
