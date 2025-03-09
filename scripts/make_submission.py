@@ -62,9 +62,18 @@ def main() -> None:
     pair_ids = pair_ids[::2]
 
     sub_df = create_sample_sub(pair_ids, sim_scores)
-    el = str(args.model_path[max(args.model_path.rfind("\\"), args.model_path.rfind("/")):-4])
+    try:
+        el = str(args.model_path)[str(args.model_path).rfind("/") : -4]
+    except:
+        el = "__"
     sub_df.to_csv(
-        f"./result/{cfg_data['model']}_ep_{el}_" + str(datetime.now()).split(".")[0].replace(" ", "_").replace("-", "").replace(":", "_") + ".csv",
+        f"./result/{cfg_data['model']}_ep_{el}_"
+        + str(datetime.now())
+        .split(".")[0]
+        .replace(" ", "_")
+        .replace("-", "")
+        .replace(":", "_")
+        + ".csv",
         index=False,
     )
 
