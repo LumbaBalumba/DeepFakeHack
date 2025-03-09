@@ -2058,6 +2058,23 @@ protobuf = ">=3.20.2"
 reference = ["Pillow", "google-re2"]
 
 [[package]]
+name = "onnx2pytorch"
+version = "0.5.1"
+description = "Library to transform onnx model to pytorch."
+optional = false
+python-versions = ">=3.6"
+groups = ["main"]
+files = [
+    {file = "onnx2pytorch-0.5.1-py3-none-any.whl", hash = "sha256:9fffda1c0c0d2eca5a54bffd2dea859ebe5be1ce22ed01981ae9d97b50385bcb"},
+    {file = "onnx2pytorch-0.5.1.tar.gz", hash = "sha256:5c3ddf004838e67793817751affb426d77955290e473b492a058fc6edcee8d14"},
+]
+
+[package.dependencies]
+onnx = ">=1.6.0"
+torch = ">=1.4.0"
+torchvision = ">=0.9.0"
+
+[[package]]
 name = "onnxscript"
 version = "0.2.2"
 description = "Naturally author ONNX functions and models using a subset of Python"
@@ -3723,4 +3740,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "9136c3ca1b3458387fc4ff8f62204d55f7b7be1c553c895fc2bf59600655868b"
+content-hash = "7fdff08f75f98861c3eef09ef4473c62ece89ce68780bc81f877a76f4f5c2514"

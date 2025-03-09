@@ -11,8 +11,10 @@ from torch.nn import functional as F
 from oml import datasets as d
 from oml.inference import inference
 from oml.registry import get_transforms_for_pretrained
+import onnx
+from onnx2pytorch import ConvertModel
 
-import models
+from deepfakehack import models
 
 
 def parse_args():
@@ -40,11 +42,17 @@ def main() -> None:
     device = cfg_data["learning_params"]["device"]
     test_path = "./data/datasplit/test.csv"
 
-    model = getattr(models, cfg_data["algorithm"]["name"])(
-        cfg_data["model"], **cfg_data["algorithm"]["model_params"]
-    ).model
-    state_dict = torch.load(f"./model_weights/{args.model_path}", map_location="cpu")
-    model.load_state_dict(state_dict)
+    if args.model_path.endswith("onnx"):
+        onnx_model = onnx.load(f"./model_weights/{args.model_path}")
+        model = ConvertModel(onnx_model)
+    else:
+        model = getattr(models, cfg_data["algorithm"]["name"])(
+            cfg_data["model"], **cfg_data["algorithm"]["model_params"]
+        ).model
+        state_dict = torch.load(
+            f"./model_weights/{args.model_path}", map_location="cpu"
+        )
+        model.load_state_dict(state_dict)
     model = model.to(device).eval()
 
     transform, _ = get_transforms_for_pretrained("resnet18_imagenet1k_v1")

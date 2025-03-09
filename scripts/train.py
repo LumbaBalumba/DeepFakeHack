@@ -11,7 +11,7 @@ import numpy as np
 from oml import miners
 from oml import losses
 
-import models
+from deepfakehack import models
 from deepfakehack.loss.loss import DeepFakelossWithMiner
 from deepfakehack.datasets import OMLDataset
 
@@ -30,10 +30,6 @@ def parse_args():
     parser.add_argument("--cfg-path", type=Path, required=True)
     args = parser.parse_args()
     return args
-
-
-def save_model_dict(model, path: str):
-    torch.save(model.state_dict(), path)
 
 
 def main():
@@ -81,7 +77,6 @@ def main():
             .replace("-", "")
             .replace(":", "_")
         )
-        print(path2weights)
 
         model.training_oml(
             **cfg_data["learning_params"],

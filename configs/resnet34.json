@@ -1,5 +1,5 @@
 {
-  "model": "resnet50_imagenet1k_v1",
+  "model": "resnet18_imagenet1k_v1",
   "type": "oml",
 
   "comment": "train",
@@ -19,7 +19,7 @@
   "loss_params": {
     "margin": 0.1
   },
-  "loss_device": "cuda",
+  "loss_device": "cpu",
   "algorithm": {
     "name": "oml_resnet_model",
     "model_params": {}
@@ -33,9 +33,9 @@
     "T_max": 300
   },
   "learning_params": {
-    "n_epochs": 100,
+    "n_epochs": 1,
     "save_frequency": 5,
-    "device": "cuda"
+    "device": "cpu"
   },
   "logger_params": {
     "metrics": ["RMSE", "angle", "NSE"]
