@@ -37,3 +37,5 @@ poetry run train --cfg-path=<path_to_your_model_config>
 ```bash
 poetry run submit --cfg-path=<path_to_your_model_config> --model-path=<path_to_your_model_weights>
 ```
+
+Презентация - в файле `Presentation.pdf`

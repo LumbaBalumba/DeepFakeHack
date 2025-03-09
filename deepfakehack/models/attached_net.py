@@ -1,5 +1,5 @@
-from models.arch.attached_oml_arch import AttachedNetArch
-from models.abstract_model import ABCModel
+from deepfakehack.models.arch.attached_oml_arch import AttachedNetArch
+from deepfakehack.models.abstract_model import ABCModel
 
 
 class AttachedNet(ABCModel):
