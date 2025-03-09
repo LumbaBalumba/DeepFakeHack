@@ -1,12 +1,8 @@
-import torch
 import numpy as np
 from pathlib import Path
 from torch.utils.tensorboard import SummaryWriter
 from typing import Optional
 
-import matplotlib.pyplot as plt
-from io import BytesIO
-from torchvision.transforms import ToTensor
 
 from sklearn.metrics import roc_curve
 
@@ -14,7 +10,6 @@ from sklearn.metrics import roc_curve
 def compute_eer(y_true, y_score):
     fpr, tpr, threshold = roc_curve(y_true, y_score)
 
-    # заменяем np.inf на max + eps
     eps = 1e-3
     threshold[0] = max(threshold[1:]) + eps
 

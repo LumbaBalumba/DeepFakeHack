@@ -1,11 +1,10 @@
 from typing import List
-from torch.utils.data.sampler import Sampler
 
 from oml.utils.misc import smart_sample
 
 import numpy as np
 
-from collections import Counter, defaultdict
+from collections import defaultdict
 from typing import Iterator, List, Union
 
 import numpy as np
@@ -16,9 +15,11 @@ from oml.utils.misc import smart_sample
 
 class SimpleSampler(IBatchSampler):
 
-    def __init__(self, labels: Union[List[int], np.ndarray], batch_size: int, n_instances: int):
-        n_labels=batch_size
-  
+    def __init__(
+        self, labels: Union[List[int], np.ndarray], batch_size: int, n_instances: int
+    ):
+        n_labels = batch_size
+
         unq_labels = set(labels)
 
         assert isinstance(n_labels, int) and isinstance(n_instances, int)
@@ -46,7 +47,6 @@ class SimpleSampler(IBatchSampler):
 
         self._batches_in_epoch = len(self._unq_labels) // self.n_labels
 
-
     @property
     def batch_size(self) -> int:
         return self._batch_size
@@ -63,7 +63,11 @@ class SimpleSampler(IBatchSampler):
             ids_batch = []
 
             labels_for_batch = set(
-                np.random.choice(list(labels_rest), size=min(self.n_labels // 2, len(labels_rest)), replace=False)
+                np.random.choice(
+                    list(labels_rest),
+                    size=min(self.n_labels // 2, len(labels_rest)),
+                    replace=False,
+                )
             )
             labels_rest -= labels_for_batch
 
@@ -79,4 +83,4 @@ class SimpleSampler(IBatchSampler):
 
             inds_epoch.append(ids_batch)
 
-        return iter(inds_epoch)  # type: ignore
+        return iter(inds_epoch)
