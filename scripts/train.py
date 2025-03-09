@@ -39,9 +39,11 @@ def main():
 
     fix_seed(cfg_data["seed"])
 
-    model = getattr(models, cfg_data["algorithm"]["name"])(
-        cfg_data["model"], **cfg_data["algorithm"]["model_params"]
-    ).to(cfg_data["learning_params"]["device"])
+    tmp = getattr(models, cfg_data["algorithm"]["name"])
+    print(tmp)
+    model = tmp(cfg_data["model"], **cfg_data["algorithm"]["model_params"]).to(
+        cfg_data["learning_params"]["device"]
+    )
 
     if cfg_data["type"] == "oml":
         optimizer = getattr(optim_lib, cfg_data["opt_name"])(
