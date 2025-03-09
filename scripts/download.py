@@ -1,7 +1,8 @@
 from os import makedirs
+import zipfile
+
 import wget
 import gdown
-import zipfile
 
 TRAIN_URL = "https://drive.google.com/file/d/1Bug0xjN-qpWh2ZYiRmwGW4BT_YjsumSf/view?usp=drive_link"
 TEST_URL = "https://storage.codenrock.com/companies/codenrock-13/contests/kryptonite-ml-challenge/test_public.zip"
@@ -16,7 +17,7 @@ def get_data(url: str, filename: str, gd: bool = False) -> None:
         gdown.download(url, out_filename, fuzzy=True)
 
     with zipfile.ZipFile(out_filename, "r") as zip_ref:
-        zip_ref.extractall(f"./data")
+        zip_ref.extractall("./data")
 
 
 def main() -> None:

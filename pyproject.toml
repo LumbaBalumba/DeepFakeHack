@@ -13,6 +13,9 @@ dependencies = [
   "tqdm (>=4.67.1,<5.0.0)",
   "numpy (==1.26.4)",
   "torch (==2.1.1)",
+  "onnx (>=1.17.0,<2.0.0)",
+  "onnxscript (>=0.2.2,<0.3.0)",
+  "onnx2pytorch (>=0.5.1,<0.6.0)",
 ]
 
 
@@ -22,7 +25,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.dev.dependencies]
 wget = "^3.2"
-pytest = "^8.3.5"
 pylint = "^3.3.4"
 pandas = "^2.2.3"
 ipykernel = "^6.29.5"
