@@ -1,18 +1,18 @@
 import os
 from typing import List
-import torch
-import pandas as pd
-from torch.nn import functional as F
-from oml import datasets as d
-from oml.inference import inference
-
-import models
 import json
 from pathlib import Path
 from argparse import ArgumentParser
 from datetime import datetime
 
+import torch
+import pandas as pd
+from torch.nn import functional as F
+from oml import datasets as d
+from oml.inference import inference
 from oml.registry import get_transforms_for_pretrained
+
+import models
 
 
 def parse_args():
@@ -34,7 +34,7 @@ def main() -> None:
         os.makedirs("result")
 
     args = parse_args()
-    with open(f"configs/{args.cfg_path}") as f:
+    with open(f"configs/{args.cfg_path}", encoding="utf8") as f:
         cfg_data = json.load(f)
 
     device = cfg_data["learning_params"]["device"]
@@ -62,14 +62,11 @@ def main() -> None:
     pair_ids = pair_ids[::2]
 
     sub_df = create_sample_sub(pair_ids, sim_scores)
-    try:
-        el = str(args.model_path)[str(args.model_path).rfind("/") : -4]
-    except:
-        el = "__"
+    el = str(args.model_path)[str(args.model_path).rfind("/") : -4]
     sub_df.to_csv(
         f"./result/{cfg_data['model']}_ep_{el}_"
         + str(datetime.now())
-        .split(".")[0]
+        .split(".", maxsplit=1)[0]
         .replace(" ", "_")
         .replace("-", "")
         .replace(":", "_")

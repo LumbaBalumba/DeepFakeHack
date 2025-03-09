@@ -1,21 +1,17 @@
-from tqdm import tqdm, trange
 from typing import Dict, List
 from pathlib import Path
+import os
 
-import imageio
-import torch
-import torch.nn as nn
+from tqdm import tqdm, trange
 import cv2
 import numpy as np
-
-from torch.utils.data import DataLoader
 from oml.retrieval import RetrievalResults, AdaptiveThresholding
 from oml.metrics import calc_retrieval_metrics_rr
 from oml.inference import inference
-
+import torch
+from torch import nn
+from torch.utils.data import DataLoader
 from torch.nn.functional import normalize
-
-import os
 
 
 def save_model_dict(model, path: str, epoch):
@@ -106,9 +102,8 @@ class ABCModel(nn.Module):
         try:
             for epoch in trange(start_epoch, n_epochs, 1):
                 model.train()
-                for elem in tqdm(dataloaders["train"]):
+                for _ in tqdm(dataloaders["train"]):
 
-                    rec_hr_hsi = model(elem)
                     optimizer.zero_grad()
                     loss = loss_func()
 
@@ -146,12 +141,10 @@ class ABCModel(nn.Module):
         device,
         interpolate: bool = False,
         inference: bool = False,
-        path2save: Path | str = None,
-        imgs_names: List[str] = None,
+        path2save: Path | str | None = None,
+        imgs_names: List[str] | None = None,
         hdr: bool = False,
         show: bool = False,
-        *args,
-        **kwargs,
     ):
         i = 0
         """

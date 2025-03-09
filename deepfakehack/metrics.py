@@ -1,9 +1,8 @@
-import numpy as np
 from pathlib import Path
-from torch.utils.tensorboard import SummaryWriter
 from typing import Optional
 
-
+import numpy as np
+from torch.utils.tensorboard import SummaryWriter
 from sklearn.metrics import roc_curve
 
 
@@ -41,7 +40,7 @@ class MetricsLogger:
                 f"These metrics are not implemented: {unknown_metrics}\n",
                 f"Currently available: {IMPLEMENTED_METRICS}",
             )
-        return {metric_name: list() for metric_name in metric_names}
+        return {metric_name: [] for metric_name in metric_names}
 
     def compute_metrics(self, gt, pred):
         for metric_name in self.metrics.keys():
