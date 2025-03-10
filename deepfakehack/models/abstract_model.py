@@ -1,26 +1,19 @@
 import os
 
-from oml.retrieval import RetrievalResults, AdaptiveThresholding
-from oml.metrics import calc_retrieval_metrics_rr
-from oml.inference import inference
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
 from torch.nn.functional import normalize
+from oml.retrieval import RetrievalResults, AdaptiveThresholding
+from oml.metrics import calc_retrieval_metrics_rr
+from oml.inference import inference
+from tqdm import tqdm
 
 
-def save_model_dict(model, path: str, epoch, onnx=True):
+def save_model_dict(model, path: str, epoch):
     if not os.path.exists(path):
         os.makedirs(path)
-
-    save_path = path + "/" + str(epoch) + ".pth" if onnx else "onnx"
-    if onnx:
-        example_input = (torch.zeros(next(model.parameters).size()),)
-        onnx_program = torch.onnx.export(model, example_input)
-        onnx_program.optimize()
-        onnx_program.save(save_path)
-    else:
-        torch.save(model.state_dict(), save_path)
+    torch.save(model.state_dict(), os.path.join(path, f"{epoch}.pth"))
 
 
 class ABCModel(nn.Module):

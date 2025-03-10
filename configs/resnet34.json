@@ -1,7 +1,5 @@
 {
   "model": "resnet34_imagenet1k_v1",
-  "type": "oml",
-
   "comment": "train",
   "seed": 42,
   "dataset_param": {
@@ -34,7 +32,7 @@
   },
   "learning_params": {
     "n_epochs": 1,
-    "save_frequency": 5,
+    "save_frequency": 1,
     "device": "cuda"
   },
   "logger_params": {

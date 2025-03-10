@@ -5,7 +5,7 @@ from oml.models import ResnetExtractor
 from oml.models import ViTExtractor
 from oml.registry import get_transforms_for_pretrained
 
-PRETRAINED_PATH = "../../pretrained_weights/"
+PRETRAINED_PATH = "pretrained_weights/"
 
 
 class AttachedNetArch(nn.Module):

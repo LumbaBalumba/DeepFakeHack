@@ -1,5 +1,5 @@
 [MASTER]
-ignore=.venv
+ignore=.venv,configs,.git,.github,data
 
 [MESSAGES CONTROL]
-disable=C0114,C0115,C0116
+disable=C0114,C0115,C0116,R0902,R0903,R0913,R0914,R0917,W0223

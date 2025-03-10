@@ -13,9 +13,6 @@ dependencies = [
   "tqdm (>=4.67.1,<5.0.0)",
   "numpy (==1.26.4)",
   "torch (==2.1.1)",
-  "onnx (>=1.17.0,<2.0.0)",
-  "onnxscript (>=0.2.2,<0.3.0)",
-  "onnx2pytorch (>=0.5.1,<0.6.0)",
 ]
 
 
@@ -33,7 +30,7 @@ gdown = "^5.2.0"
 [tool.poetry.scripts]
 download = "scripts.download:main"
 train = "scripts.train:main"
-submit = "scripts.make_submission:main"
+submit = "scripts.submit:main"
 
 [[tool.poetry.source]]
 name = "pytorch"

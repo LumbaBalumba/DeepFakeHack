@@ -1,5 +1,5 @@
-from pathlib import Path
 from typing import Optional
+from pathlib import Path
 
 import numpy as np
 from torch.utils.tensorboard import SummaryWriter
