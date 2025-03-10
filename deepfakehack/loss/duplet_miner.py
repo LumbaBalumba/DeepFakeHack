@@ -1,10 +1,12 @@
 from itertools import product
 from typing import List
+from dataclasses import dataclass
 
 import numpy as np
 import torch
 
 
+@dataclass
 class DupletMiner:
 
     def __init__(self, max_output_triplets: int = float("inf"), device: str = "cpu"):
