@@ -12,7 +12,7 @@ from oml import datasets as d
 from oml.inference import inference
 from oml.registry import get_transforms_for_pretrained
 
-import models
+from deepfakehack import models
 
 
 def parse_args():

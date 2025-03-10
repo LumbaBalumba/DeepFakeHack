@@ -13,7 +13,7 @@ from tqdm import tqdm
 def save_model_dict(model, path: str, epoch):
     if not os.path.exists(path):
         os.makedirs(path)
-    torch.save(model.state_dict(), path + "/" + str(epoch) + ".pth")
+    torch.save(model.state_dict(), os.path.join(path, f"{epoch}.pth"))
 
 
 class ABCModel(nn.Module):

@@ -12,7 +12,7 @@ import torch.optim as optim_lib
 from oml import miners
 from oml import losses
 
-import models
+from deepfakehack import models
 from deepfakehack.datasets import OMLDataset
 from deepfakehack.loss.loss import DeepFakelossWithMiner
 
