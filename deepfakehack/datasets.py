@@ -6,10 +6,8 @@ from deepfakehack.loss.simple_sampler import SimpleSampler
 
 
 class OMLDataset:
-    def __init__(self, transform, sampler: str, params: dict):
-        df_train, df_val = pd.read_csv(
-            "./data/datasplit/train_with_meta.csv"
-        ), pd.read_csv("./data/datasplit/val_with_meta.csv")
+    def __init__(self, source_train, source_val, transform, sampler: str, params: dict):
+        df_train, df_val = pd.read_csv(source_train), pd.read_csv(source_val)
         self.train = d.ImageLabeledDataset(df_train, transform=transform)
         self.val = d.ImageQueryGalleryLabeledDataset(df_val, transform=transform)
 

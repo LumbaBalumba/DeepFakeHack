@@ -53,7 +53,11 @@ def main():
         )
 
         data = OMLDataset(
-            model.transform, cfg_data["sampler_name"], cfg_data["loader_params"]
+            "./data/datasplit/train_with_meta.csv",
+            "./data/datasplit/val_with_meta.csv",
+            model.transform,
+            cfg_data["sampler_name"],
+            cfg_data["loader_params"],
         )
         if cfg_data["loss_name"] == "DeepFakeLoss":
             criterion = DeepFakelossWithMiner()
