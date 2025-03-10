@@ -1,7 +1,5 @@
 {
   "model": "resnet34_imagenet1k_v1",
-  "type": "oml",
-
   "comment": "train",
   "seed": 42,
   "dataset_param": {

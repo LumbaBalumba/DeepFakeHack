@@ -42,10 +42,10 @@ def main() -> None:
 
     model = getattr(models, cfg_data["algorithm"]["name"])(
         cfg_data["model"], **cfg_data["algorithm"]["model_params"]
-    ).model
+    )
     state_dict = torch.load(f"./model_weights/{args.model_path}", map_location="cpu")
-    model.load_state_dict(state_dict)
-    model = model.to(device).eval()
+    model.model.load_state_dict(state_dict)
+    model = model.model.to(device).eval()
 
     transform, _ = get_transforms_for_pretrained("resnet18_imagenet1k_v1")
 
@@ -62,12 +62,8 @@ def main() -> None:
     pair_ids = pair_ids[::2]
 
     sub_df = create_sample_sub(pair_ids, sim_scores)
-    try:
-        el = str(args.model_path)[str(args.model_path).rfind("/") : -4]
-    except IndexError:
-        el = "__"
     sub_df.to_csv(
-        f"./result/{cfg_data['model']}_ep_{el}_"
+        f"./result/{cfg_data['model']}_"
         + str(datetime.now())
         .split(".", maxsplit=1)[0]
         .replace(" ", "_")

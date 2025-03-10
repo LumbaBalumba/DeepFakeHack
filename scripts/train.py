@@ -6,13 +6,11 @@ import random
 
 import numpy as np
 import torch
-import torch.optim.lr_scheduler as sched_lib
-import torch.optim as optim_lib
 
 from oml import miners
 from oml import losses
 
-from deepfakehack import models
+from deepfakehack import ModelBuilder, OptimizerBuilder, SchedulerBuilder
 from deepfakehack.datasets import OMLDataset
 from deepfakehack.loss.loss import DeepFakelossWithMiner
 
@@ -40,60 +38,52 @@ def main():
 
     fix_seed(cfg_data["seed"])
 
-    model = getattr(models, cfg_data["algorithm"]["name"])(
-        cfg_data["model"], **cfg_data["algorithm"]["model_params"]
-    ).to(cfg_data["learning_params"]["device"])
+    model = ModelBuilder.build(cfg_data)
 
-    if cfg_data["type"] == "oml":
-        optimizer = getattr(optim_lib, cfg_data["opt_name"])(
-            model.model.parameters(), **cfg_data["opt_params"]
-        )
-        scheduler = getattr(sched_lib, cfg_data["scheduler_name"])(
-            optimizer, **cfg_data["scheduler_params"]
-        )
+    optimizer = OptimizerBuilder.build(cfg_data, model)
+    scheduler = SchedulerBuilder.build(cfg_data, optimizer)
 
-        data = OMLDataset(
-            "./data/datasplit/train_with_meta.csv",
-            "./data/datasplit/val_with_meta.csv",
-            model.transform,
-            cfg_data["sampler_name"],
-            cfg_data["loader_params"],
-        )
-        if cfg_data["loss_name"] == "DeepFakeLoss":
-            criterion = DeepFakelossWithMiner()
-        else:
-            loss = getattr(losses, cfg_data["loss_name"])
-            criterion = loss(
-                **cfg_data["loss_params"],
-                **(
-                    {"miner": getattr(miners, cfg_data["miner_name"])()}
-                    if hasattr(loss, "miner")
-                    else {}
-                ),
-            )
-        path2weights = (
-            cfg_data["path2weights"]
-            + "/"
-            + cfg_data["model"]
-            + "___"
-            + str(datetime.now())
-            .split(".", maxsplit=1)[0]
-            .replace(" ", "_")
-            .replace("-", "")
-            .replace(":", "_")
+    data = OMLDataset(
+        "./data/datasplit/train_with_meta.csv",
+        "./data/datasplit/val_with_meta.csv",
+        model.transform,
+        cfg_data["sampler_name"],
+        cfg_data["loader_params"],
+    )
+    if cfg_data["loss_name"] == "DeepFakeLoss":
+        criterion = DeepFakelossWithMiner()
+    else:
+        loss = getattr(losses, cfg_data["loss_name"])
+        criterion = loss(
+            **cfg_data["loss_params"],
+            **(
+                {"miner": getattr(miners, cfg_data["miner_name"])()}
+                if hasattr(loss, "miner")
+                else {}
+            ),
         )
 
-        model.training_oml(
-            **cfg_data["learning_params"],
-            dataset=data,
-            model=model.model,
-            criterion=criterion,
-            optimizer=optimizer,
-            scheduler=scheduler,
-            path2weights=path2weights,
-        )
-    elif cfg_data["type"] == "abstract":
-        model.train_loop(...)
+    path2weights = (
+        cfg_data["path2weights"]
+        + "/"
+        + cfg_data["model"]
+        + "___"
+        + str(datetime.now())
+        .split(".", maxsplit=1)[0]
+        .replace(" ", "_")
+        .replace("-", "")
+        .replace(":", "_")
+    )
+
+    model.training_oml(
+        **cfg_data["learning_params"],
+        dataset=data,
+        model=model.model,
+        criterion=criterion,
+        optimizer=optimizer,
+        scheduler=scheduler,
+        path2weights=path2weights,
+    )
 
 
 if __name__ == "__main__":
